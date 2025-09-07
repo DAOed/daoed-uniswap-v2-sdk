@@ -1,4 +1,4 @@
-import { FACTORY_ADDRESSES } from './addresses';
+import { FACTORY_ADDRESSES } from './addresses'
 
 import JSBI from 'jsbi'
 
@@ -17,8 +17,6 @@ export enum Rounding {
 }
 
 export const MaxUint256 = JSBI.BigInt('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
-
-
 
 export const FACTORY_ADDRESS_MAP: { [chainId: number]: string } = FACTORY_ADDRESSES
 

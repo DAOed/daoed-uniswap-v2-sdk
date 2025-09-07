@@ -10,7 +10,7 @@ module.exports = {
       }
       return plugin
     })
-    
+
     return config
-  },
+  }
 }
