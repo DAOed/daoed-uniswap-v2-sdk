@@ -1,0 +1,53 @@
+{
+  "name": "daoed-uniswap-v2-sdk-core",
+  "license": "MIT",
+  "version": "1.0.0",
+  "description": "⚒️ An SDK for building applications on top of DAOed Uniswap V2 Core",
+  "main": "dist/daoed-uniswap-v2-sdk-core.cjs.production.min.js",
+  "module": "dist/daoed-uniswap-v2-sdk-core.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DAOed/daoed-uniswap-v2-sdk-core.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "keywords": [
+    "uniswap",
+    "ethereum"
+  ],
+  "scripts": {
+    "build": "tsdx build --format cjs,esm",
+    "start": "tsdx watch",
+    "test": "tsdx test",
+    "prepublishOnly": "yarn build"
+  },
+  "dependencies": {
+    "@ethersproject/address": "^5.0.2",
+    "@ethersproject/solidity": "^5.8.0",
+    "big.js": "^5.2.2",
+    "decimal.js-light": "^2.5.0",
+    "dotenv": "^17.2.2",
+    "jsbi": "^3.1.4",
+    "tiny-invariant": "^1.1.0",
+    "toformat": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/big.js": "^4.0.5",
+    "@types/jest": "^24.0.25",
+    "tsdx": "^0.14.1"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "prettier": {
+    "printWidth": 120,
+    "semi": false,
+    "singleQuote": true
+  },
+  "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72"
+}

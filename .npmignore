@@ -1,0 +1,16 @@
+src/
+test/
+tests/
+*.test.*
+*.spec.*
+.env*
+.git*
+.github/
+.vscode/
+.claude/
+node_modules/
+coverage/
+*.log
+*.tgz
+.DS_Store
+Thumbs.db
