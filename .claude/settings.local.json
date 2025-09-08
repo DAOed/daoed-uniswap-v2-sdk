@@ -1,6 +1,17 @@
 {
   "permissions": {
-    "allow": ["Bash(npm test)", "Bash(npm run build:*)"],
+    "allow": [
+      "Bash(npm test)",
+      "Bash(npm run build:*)",
+      "Bash(yarn build)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git pull:*)",
+      "Bash(rm:*)",
+      "Bash(npm whoami:*)",
+      "Bash(npm login)"
+    ],
     "deny": [],
     "ask": []
   }

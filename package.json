@@ -1,31 +1,42 @@
 {
-  "name": "@daoed/uniswap-v2-sdk-core",
+  "name": "@daoed-com/uniswap-v2-sdk-core",
   "license": "MIT",
   "version": "1.0.0",
   "description": "⚒️ An SDK for building applications on top of DAOed Uniswap V2 Core",
-  "main": "dist/daoed-uniswap-v2-sdk-core.cjs.production.min.js",
-  "module": "dist/daoed-uniswap-v2-sdk-core.esm.js",
+  "author": "kafuivenu",
+  "main": "dist/uniswap-v2-sdk-core.cjs.production.min.js",
+  "module": "dist/uniswap-v2-sdk-core.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/DAOed/daoed-uniswap-v2-sdk.git"
   },
+  "bugs": {
+    "url": "https://github.com/DAOed/daoed-uniswap-v2-sdk/issues"
+  },
+  "homepage": "https://github.com/DAOed/daoed-uniswap-v2-sdk#readme",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
   },
   "keywords": [
     "uniswap",
-    "ethereum"
+    "ethereum",
+    "defi",
+    "dex",
+    "sdk",
+    "daoed",
+    "blockchain"
   ],
   "scripts": {
     "build": "tsdx build --format cjs,esm",
     "start": "tsdx watch",
     "test": "tsdx test",
-    "prepublishOnly": "yarn build",
-    "update-readme": "node update-readme.js"
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@ethersproject/address": "^5.0.2",
