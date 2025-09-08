@@ -7,19 +7,19 @@
 Install the SDK directly from GitHub:
 
 ```bash
-npm install git+https://github.com/DAOed/daoed-uniswap-v2-sdk-core.git
+npm install git+https://github.com/DAOed/daoed-uniswap-v2-sdk.git
 ```
 
 or with yarn:
 
 ```bash
-yarn add git+https://github.com/DAOed/daoed-uniswap-v2-sdk-core.git
+yarn add git+https://github.com/DAOed/daoed-uniswap-v2-sdk.git
 ```
 
 ## Usage
 
 ```typescript
-import { Token, Pair, Route } from 'daoed-uniswap-v2-sdk-core'
+import { Token, Pair, Route } from '@daoed/uniswap-v2-sdk-core'
 
 // Create token instances
 const token0 = new Token(1, '0x...', 18, 'TOKEN0', 'Token 0')
