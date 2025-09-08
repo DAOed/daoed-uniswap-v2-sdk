@@ -36,7 +36,6 @@ describe('computePairAddress', () => {
 })
 
 describe('Pair', () => {
-
   describe('constructor', () => {
     it('cannot be used for tokens on different chains', () => {
       expect(
@@ -51,11 +50,13 @@ describe('Pair', () => {
     })
 
     it('returns the correct address on Sepolia', () => {
-      expect(Pair.getAddress(USDC_SEPOLIA, DAI_SEPOLIA)).toEqual(computePairAddress({
-        factoryAddress: FACTORY_ADDRESSES[SEPOLIA_CHAIN_ID],
-        tokenA: USDC_SEPOLIA,
-        tokenB: DAI_SEPOLIA
-      }))
+      expect(Pair.getAddress(USDC_SEPOLIA, DAI_SEPOLIA)).toEqual(
+        computePairAddress({
+          factoryAddress: FACTORY_ADDRESSES[SEPOLIA_CHAIN_ID],
+          tokenA: USDC_SEPOLIA,
+          tokenB: DAI_SEPOLIA
+        })
+      )
     })
 
     it('throws if factory address is not defined for chain id', () => {
