@@ -7,13 +7,13 @@
 Install the SDK directly from GitHub:
 
 ```bash
-npm install git+https://github.com/DAOed/daoed-uniswap-v2-sdk.git
+npm install git+https://github.com/DAOed/daoed-uniswap-v2-sdk.git#182d8c22bc42c4fa1774fd15abf70cbc4243532f
 ```
 
 or with yarn:
 
 ```bash
-yarn add git+https://github.com/DAOed/daoed-uniswap-v2-sdk.git
+yarn add git+https://github.com/DAOed/daoed-uniswap-v2-sdk.git#182d8c22bc42c4fa1774fd15abf70cbc4243532f
 ```
 
 ## Usage
