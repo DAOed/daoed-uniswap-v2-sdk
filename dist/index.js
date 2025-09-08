@@ -1,7 +1,8 @@
+
 'use strict'
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./daoed-uniswap-v2-sdk-core.cjs.production.min.js')
+  module.exports = require('./uniswap-v2-sdk-core.cjs.production.min.js')
 } else {
-  module.exports = require('./daoed-uniswap-v2-sdk-core.cjs.development.js')
+  module.exports = require('./uniswap-v2-sdk-core.cjs.development.js')
 }
