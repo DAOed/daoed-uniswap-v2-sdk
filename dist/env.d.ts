@@ -1,8 +1,6 @@
 export declare const ENV: {
-    readonly NODE_ENV: string;
-    readonly NETWORK: string;
-    readonly FACTORY_ADDRESS: string | undefined;
-    readonly ROUTER_ADDRESS: string | undefined;
-    readonly CHAIN_ID: number;
+    readonly SEPOLIA_FACTORY_ADDRESS: string;
+    readonly SEPOLIA_ROUTER_ADDRESS: string;
+    readonly SEPOLIA_CHAIN_ID: 11155111;
 };
 export declare type Environment = typeof ENV;

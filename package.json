@@ -1,8 +1,8 @@
 {
   "name": "@daoed-com/uniswap-v2-sdk-core",
   "license": "MIT",
-  "version": "1.0.0",
-  "description": "⚒️ An SDK for building applications on top of DAOed Uniswap V2 Core",
+  "version": "1.0.1",
+  "description": "⚒️ A unified SDK for building applications on DAOed Uniswap V2 smart contracts",
   "author": "kafuivenu",
   "main": "dist/uniswap-v2-sdk-core.cjs.production.min.js",
   "module": "dist/uniswap-v2-sdk-core.esm.js",

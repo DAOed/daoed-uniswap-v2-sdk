@@ -15,31 +15,24 @@ var solidity = require('@ethersproject/solidity');
 
 // Environment configuration
 var ENV = {
-  NODE_ENV: "development" ,
-  NETWORK: process.env.NETWORK || 'mainnet',
-  FACTORY_ADDRESS: process.env.FACTORY_ADDRESS,
-  ROUTER_ADDRESS: process.env.ROUTER_ADDRESS,
-  CHAIN_ID: process.env.CHAIN_ID ? /*#__PURE__*/parseInt(process.env.CHAIN_ID) : 1
+  SEPOLIA_FACTORY_ADDRESS: /*#__PURE__*/String(process.env.SEPOLIA_FACTORY_ADDRESS),
+  SEPOLIA_ROUTER_ADDRESS: /*#__PURE__*/String(process.env.SEPOLIA_ROUTER_ADDRESS),
+  SEPOLIA_CHAIN_ID: /*#__PURE__*/Number(process.env.SEPOLIA_CHAIN_ID)
 };
 
+(function (ChainId) {
+  ChainId[ChainId["SEPOLIA"] = 11155111] = "SEPOLIA";
+})(exports.ChainId || (exports.ChainId = {}));
+var SUPPORTED_CHAINS = [exports.ChainId.SEPOLIA];
+(function (NativeCurrencyName) {
+  // Strings match input for CLI
+  NativeCurrencyName["ETHER"] = "ETH";
+})(exports.NativeCurrencyName || (exports.NativeCurrencyName = {}));
+
+var _FACTORY_ADDRESSES, _ROUTER_ADDRESSES;
 // Contract addresses for different networks
-var FACTORY_ADDRESSES = {
-  1: '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f',
-  3: '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f',
-  11155111: '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f' // Sepolia
-};
-var ROUTER_ADDRESSES = {
-  1: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D',
-  3: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D',
-  11155111: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D' // Sepolia
-};
-// Initialize addresses from environment variables if available
-if (ENV.FACTORY_ADDRESS && ENV.CHAIN_ID) {
-  FACTORY_ADDRESSES[ENV.CHAIN_ID] = ENV.FACTORY_ADDRESS;
-}
-if (ENV.ROUTER_ADDRESS && ENV.CHAIN_ID) {
-  ROUTER_ADDRESSES[ENV.CHAIN_ID] = ENV.ROUTER_ADDRESS;
-}
+var FACTORY_ADDRESSES = (_FACTORY_ADDRESSES = {}, _FACTORY_ADDRESSES[exports.ChainId.SEPOLIA] = ENV.SEPOLIA_FACTORY_ADDRESS, _FACTORY_ADDRESSES);
+var ROUTER_ADDRESSES = (_ROUTER_ADDRESSES = {}, _ROUTER_ADDRESSES[exports.ChainId.SEPOLIA] = ENV.SEPOLIA_ROUTER_ADDRESS, _ROUTER_ADDRESSES);
 // Helper functions to set addresses dynamically
 function setFactoryAddress(chainId, address) {
   FACTORY_ADDRESSES[chainId] = address;
@@ -482,18 +475,6 @@ var Percent = /*#__PURE__*/function (_Fraction) {
 var ZERO_PERCENT = /*#__PURE__*/new Percent(ZERO);
 var ONE_HUNDRED_PERCENT = /*#__PURE__*/new Percent(ONE);
 
-(function (ChainId) {
-  ChainId[ChainId["MAINNET"] = 1] = "MAINNET";
-  ChainId[ChainId["ROPSTEN"] = 3] = "ROPSTEN";
-  ChainId[ChainId["SEPOLIA"] = 11155111] = "SEPOLIA";
-  ChainId[ChainId["BASE"] = 8453] = "BASE";
-})(exports.ChainId || (exports.ChainId = {}));
-var SUPPORTED_CHAINS = [exports.ChainId.MAINNET, exports.ChainId.ROPSTEN, exports.ChainId.SEPOLIA, exports.ChainId.BASE];
-(function (NativeCurrencyName) {
-  // Strings match input for CLI
-  NativeCurrencyName["ETHER"] = "ETH";
-})(exports.NativeCurrencyName || (exports.NativeCurrencyName = {}));
-
 var Big$1 = /*#__PURE__*/toFormat(_Big);
 var CurrencyAmount = /*#__PURE__*/function (_Fraction) {
   function CurrencyAmount(currency, numerator, denominator) {
@@ -787,7 +768,7 @@ var _WETH;
 /**
  * Known WETH9 implementation addresses, used in our implementation of Ether#wrapped
  */
-var WETH9 = (_WETH = {}, _WETH[exports.ChainId.MAINNET] = /*#__PURE__*/new Token(exports.ChainId.MAINNET, '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', 18, 'WETH', 'Wrapped Ether'), _WETH[exports.ChainId.ROPSTEN] = /*#__PURE__*/new Token(exports.ChainId.ROPSTEN, '0xc778417E063141139Fce010982780140Aa0cD5Ab', 18, 'WETH', 'Wrapped Ether'), _WETH[exports.ChainId.SEPOLIA] = /*#__PURE__*/new Token(exports.ChainId.SEPOLIA, '0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14', 18, 'WETH', 'Wrapped Ether'), _WETH[exports.ChainId.BASE] = /*#__PURE__*/new Token(exports.ChainId.BASE, '0x4200000000000000000000000000000000000006', 18, 'WETH', 'Wrapped Ether'), _WETH);
+var WETH9 = (_WETH = {}, _WETH[exports.ChainId.SEPOLIA] = /*#__PURE__*/new Token(exports.ChainId.SEPOLIA, '0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14', 18, 'WETH', 'Wrapped Ether'), _WETH);
 
 /**
  * Ether is the main usage of a 'native' currency, i.e. for Ethereum mainnet and all testnets

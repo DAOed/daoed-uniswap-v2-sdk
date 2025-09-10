@@ -1,11 +1,8 @@
 export enum ChainId {
-  MAINNET = 1,
-  ROPSTEN = 3, // For tests
-  SEPOLIA = 11155111,
-  BASE = 8453
+  SEPOLIA = 11155111
 }
 
-export const SUPPORTED_CHAINS = [ChainId.MAINNET, ChainId.ROPSTEN, ChainId.SEPOLIA, ChainId.BASE] as const
+export const SUPPORTED_CHAINS = [ChainId.SEPOLIA] as const
 export type SupportedChainsType = typeof SUPPORTED_CHAINS[number]
 
 export enum NativeCurrencyName {
