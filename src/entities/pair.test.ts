@@ -38,10 +38,11 @@ describe('computePairAddress', () => {
 describe('Pair', () => {
   describe('constructor', () => {
     it('cannot be used for tokens on different chains', () => {
-      // Create a token on a different chain for testing  
+      // Create a token on a different chain for testing
       const differentChainToken = new Token(1, '0x1234567890123456789012345678901234567890', 18, 'TEST', 'Test Token')
       expect(
-        () => new Pair(CurrencyAmount.fromRawAmount(USDC, '100'), CurrencyAmount.fromRawAmount(differentChainToken, '100'))
+        () =>
+          new Pair(CurrencyAmount.fromRawAmount(USDC, '100'), CurrencyAmount.fromRawAmount(differentChainToken, '100'))
       ).toThrow('CHAIN_IDS')
     })
   })
@@ -170,24 +171,33 @@ describe('Pair', () => {
   describe('#chainId', () => {
     it('returns the token0 chainId', () => {
       expect(
-        new Pair(CurrencyAmount.fromRawAmount(USDC_SEPOLIA, '100'), CurrencyAmount.fromRawAmount(DAI_SEPOLIA, '100')).chainId
+        new Pair(CurrencyAmount.fromRawAmount(USDC_SEPOLIA, '100'), CurrencyAmount.fromRawAmount(DAI_SEPOLIA, '100'))
+          .chainId
       ).toEqual(SEPOLIA_CHAIN_ID)
       expect(
-        new Pair(CurrencyAmount.fromRawAmount(DAI_SEPOLIA, '100'), CurrencyAmount.fromRawAmount(USDC_SEPOLIA, '100')).chainId
+        new Pair(CurrencyAmount.fromRawAmount(DAI_SEPOLIA, '100'), CurrencyAmount.fromRawAmount(USDC_SEPOLIA, '100'))
+          .chainId
       ).toEqual(SEPOLIA_CHAIN_ID)
     })
   })
   describe('#involvesToken', () => {
     expect(
-      new Pair(CurrencyAmount.fromRawAmount(USDC_SEPOLIA, '100'), CurrencyAmount.fromRawAmount(DAI_SEPOLIA, '100')).involvesToken(USDC_SEPOLIA)
+      new Pair(
+        CurrencyAmount.fromRawAmount(USDC_SEPOLIA, '100'),
+        CurrencyAmount.fromRawAmount(DAI_SEPOLIA, '100')
+      ).involvesToken(USDC_SEPOLIA)
     ).toEqual(true)
     expect(
-      new Pair(CurrencyAmount.fromRawAmount(USDC_SEPOLIA, '100'), CurrencyAmount.fromRawAmount(DAI_SEPOLIA, '100')).involvesToken(DAI_SEPOLIA)
+      new Pair(
+        CurrencyAmount.fromRawAmount(USDC_SEPOLIA, '100'),
+        CurrencyAmount.fromRawAmount(DAI_SEPOLIA, '100')
+      ).involvesToken(DAI_SEPOLIA)
     ).toEqual(true)
     expect(
-      new Pair(CurrencyAmount.fromRawAmount(USDC_SEPOLIA, '100'), CurrencyAmount.fromRawAmount(DAI_SEPOLIA, '100')).involvesToken(
-        WETH9[SEPOLIA_CHAIN_ID]
-      )
+      new Pair(
+        CurrencyAmount.fromRawAmount(USDC_SEPOLIA, '100'),
+        CurrencyAmount.fromRawAmount(DAI_SEPOLIA, '100')
+      ).involvesToken(WETH9[SEPOLIA_CHAIN_ID])
     ).toEqual(false)
   })
   describe('getInputAmount and getOutputAmount', () => {
