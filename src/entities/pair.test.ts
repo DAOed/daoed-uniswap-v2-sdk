@@ -6,29 +6,29 @@ import { FACTORY_ADDRESSES } from '../addresses'
 import { WETH9 } from './weth9'
 import { InsufficientInputAmountError } from '../errors'
 import { computePairAddress, Pair } from './pair'
-import { MAINNET_CHAIN_ID, SEPOLIA_CHAIN_ID, USDC, DAI, USDC_SEPOLIA, DAI_SEPOLIA } from './test-constants'
+import { SEPOLIA_CHAIN_ID, USDC, DAI, USDC_SEPOLIA, DAI_SEPOLIA } from './test-constants'
 
 describe('computePairAddress', () => {
   it('should correctly compute the pool address', () => {
     const result = computePairAddress({
-      factoryAddress: FACTORY_ADDRESSES[MAINNET_CHAIN_ID],
-      tokenA: USDC,
-      tokenB: DAI
+      factoryAddress: FACTORY_ADDRESSES[SEPOLIA_CHAIN_ID],
+      tokenA: USDC_SEPOLIA,
+      tokenB: DAI_SEPOLIA
     })
 
-    expect(result).toEqual('0xAE461cA67B15dc8dc81CE7615e0320dA1A9aB8D5')
+    expect(result).toEqual('0xbd9dBc76ADCD34561f89C56be0547691ccD9AF32')
   })
   it('should give same result regardless of token order', () => {
     const resultA = computePairAddress({
-      factoryAddress: FACTORY_ADDRESSES[MAINNET_CHAIN_ID],
-      tokenA: USDC,
-      tokenB: DAI
+      factoryAddress: FACTORY_ADDRESSES[SEPOLIA_CHAIN_ID],
+      tokenA: USDC_SEPOLIA,
+      tokenB: DAI_SEPOLIA
     })
 
     const resultB = computePairAddress({
-      factoryAddress: FACTORY_ADDRESSES[MAINNET_CHAIN_ID],
-      tokenA: DAI,
-      tokenB: USDC
+      factoryAddress: FACTORY_ADDRESSES[SEPOLIA_CHAIN_ID],
+      tokenA: DAI_SEPOLIA,
+      tokenB: USDC_SEPOLIA
     })
 
     expect(resultA).toEqual(resultB)
@@ -38,15 +38,17 @@ describe('computePairAddress', () => {
 describe('Pair', () => {
   describe('constructor', () => {
     it('cannot be used for tokens on different chains', () => {
+      // Create a token on a different chain for testing  
+      const differentChainToken = new Token(1, '0x1234567890123456789012345678901234567890', 18, 'TEST', 'Test Token')
       expect(
-        () => new Pair(CurrencyAmount.fromRawAmount(USDC, '100'), CurrencyAmount.fromRawAmount(WETH9[3], '100'))
+        () => new Pair(CurrencyAmount.fromRawAmount(USDC, '100'), CurrencyAmount.fromRawAmount(differentChainToken, '100'))
       ).toThrow('CHAIN_IDS')
     })
   })
 
   describe('#getAddress', () => {
     it('returns the correct address', () => {
-      expect(Pair.getAddress(USDC, DAI)).toEqual('0xAE461cA67B15dc8dc81CE7615e0320dA1A9aB8D5')
+      expect(Pair.getAddress(USDC_SEPOLIA, DAI_SEPOLIA)).toEqual('0xbd9dBc76ADCD34561f89C56be0547691ccD9AF32')
     })
 
     it('returns the correct address on Sepolia', () => {
@@ -75,40 +77,40 @@ describe('Pair', () => {
     it('always is the token that sorts before', () => {
       expect(
         new Pair(CurrencyAmount.fromRawAmount(USDC, '100'), CurrencyAmount.fromRawAmount(DAI, '100')).token0
-      ).toEqual(DAI)
+      ).toEqual(USDC)
       expect(
         new Pair(CurrencyAmount.fromRawAmount(DAI, '100'), CurrencyAmount.fromRawAmount(USDC, '100')).token0
-      ).toEqual(DAI)
+      ).toEqual(USDC)
     })
   })
   describe('#token1', () => {
     it('always is the token that sorts after', () => {
       expect(
         new Pair(CurrencyAmount.fromRawAmount(USDC, '100'), CurrencyAmount.fromRawAmount(DAI, '100')).token1
-      ).toEqual(USDC)
+      ).toEqual(DAI)
       expect(
         new Pair(CurrencyAmount.fromRawAmount(DAI, '100'), CurrencyAmount.fromRawAmount(USDC, '100')).token1
-      ).toEqual(USDC)
+      ).toEqual(DAI)
     })
   })
   describe('#reserve0', () => {
     it('always comes from the token that sorts before', () => {
       expect(
         new Pair(CurrencyAmount.fromRawAmount(USDC, '100'), CurrencyAmount.fromRawAmount(DAI, '101')).reserve0
-      ).toEqual(CurrencyAmount.fromRawAmount(DAI, '101'))
+      ).toEqual(CurrencyAmount.fromRawAmount(USDC, '100'))
       expect(
         new Pair(CurrencyAmount.fromRawAmount(DAI, '101'), CurrencyAmount.fromRawAmount(USDC, '100')).reserve0
-      ).toEqual(CurrencyAmount.fromRawAmount(DAI, '101'))
+      ).toEqual(CurrencyAmount.fromRawAmount(USDC, '100'))
     })
   })
   describe('#reserve1', () => {
     it('always comes from the token that sorts after', () => {
       expect(
         new Pair(CurrencyAmount.fromRawAmount(USDC, '100'), CurrencyAmount.fromRawAmount(DAI, '101')).reserve1
-      ).toEqual(CurrencyAmount.fromRawAmount(USDC, '100'))
+      ).toEqual(CurrencyAmount.fromRawAmount(DAI, '101'))
       expect(
         new Pair(CurrencyAmount.fromRawAmount(DAI, '101'), CurrencyAmount.fromRawAmount(USDC, '100')).reserve1
-      ).toEqual(CurrencyAmount.fromRawAmount(USDC, '100'))
+      ).toEqual(CurrencyAmount.fromRawAmount(DAI, '101'))
     })
   })
 
@@ -116,10 +118,10 @@ describe('Pair', () => {
     it('returns price of token0 in terms of token1', () => {
       expect(
         new Pair(CurrencyAmount.fromRawAmount(USDC, '101'), CurrencyAmount.fromRawAmount(DAI, '100')).token0Price
-      ).toEqual(new Price(DAI, USDC, '100', '101'))
+      ).toEqual(new Price(USDC, DAI, '101', '100'))
       expect(
         new Pair(CurrencyAmount.fromRawAmount(DAI, '100'), CurrencyAmount.fromRawAmount(USDC, '101')).token0Price
-      ).toEqual(new Price(DAI, USDC, '100', '101'))
+      ).toEqual(new Price(USDC, DAI, '101', '100'))
     })
   })
 
@@ -127,22 +129,22 @@ describe('Pair', () => {
     it('returns price of token1 in terms of token0', () => {
       expect(
         new Pair(CurrencyAmount.fromRawAmount(USDC, '101'), CurrencyAmount.fromRawAmount(DAI, '100')).token1Price
-      ).toEqual(new Price(USDC, DAI, '101', '100'))
+      ).toEqual(new Price(DAI, USDC, '100', '101'))
       expect(
         new Pair(CurrencyAmount.fromRawAmount(DAI, '100'), CurrencyAmount.fromRawAmount(USDC, '101')).token1Price
-      ).toEqual(new Price(USDC, DAI, '101', '100'))
+      ).toEqual(new Price(DAI, USDC, '100', '101'))
     })
   })
 
   describe('#priceOf', () => {
     const pair = new Pair(CurrencyAmount.fromRawAmount(USDC, '101'), CurrencyAmount.fromRawAmount(DAI, '100'))
     it('returns price of token in terms of other token', () => {
-      expect(pair.priceOf(DAI)).toEqual(pair.token0Price)
-      expect(pair.priceOf(USDC)).toEqual(pair.token1Price)
+      expect(pair.priceOf(USDC)).toEqual(pair.token0Price)
+      expect(pair.priceOf(DAI)).toEqual(pair.token1Price)
     })
 
     it('throws if invalid token', () => {
-      expect(() => pair.priceOf(WETH9[1])).toThrow('TOKEN')
+      expect(() => pair.priceOf(WETH9[SEPOLIA_CHAIN_ID])).toThrow('TOKEN')
     })
   })
 
@@ -159,7 +161,7 @@ describe('Pair', () => {
     it('throws if not in the pair', () => {
       expect(() =>
         new Pair(CurrencyAmount.fromRawAmount(DAI, '101'), CurrencyAmount.fromRawAmount(USDC, '100')).reserveOf(
-          WETH9[1]
+          WETH9[SEPOLIA_CHAIN_ID]
         )
       ).toThrow('TOKEN')
     })
@@ -168,23 +170,23 @@ describe('Pair', () => {
   describe('#chainId', () => {
     it('returns the token0 chainId', () => {
       expect(
-        new Pair(CurrencyAmount.fromRawAmount(USDC, '100'), CurrencyAmount.fromRawAmount(DAI, '100')).chainId
-      ).toEqual(1)
+        new Pair(CurrencyAmount.fromRawAmount(USDC_SEPOLIA, '100'), CurrencyAmount.fromRawAmount(DAI_SEPOLIA, '100')).chainId
+      ).toEqual(SEPOLIA_CHAIN_ID)
       expect(
-        new Pair(CurrencyAmount.fromRawAmount(DAI, '100'), CurrencyAmount.fromRawAmount(USDC, '100')).chainId
-      ).toEqual(1)
+        new Pair(CurrencyAmount.fromRawAmount(DAI_SEPOLIA, '100'), CurrencyAmount.fromRawAmount(USDC_SEPOLIA, '100')).chainId
+      ).toEqual(SEPOLIA_CHAIN_ID)
     })
   })
   describe('#involvesToken', () => {
     expect(
-      new Pair(CurrencyAmount.fromRawAmount(USDC, '100'), CurrencyAmount.fromRawAmount(DAI, '100')).involvesToken(USDC)
+      new Pair(CurrencyAmount.fromRawAmount(USDC_SEPOLIA, '100'), CurrencyAmount.fromRawAmount(DAI_SEPOLIA, '100')).involvesToken(USDC_SEPOLIA)
     ).toEqual(true)
     expect(
-      new Pair(CurrencyAmount.fromRawAmount(USDC, '100'), CurrencyAmount.fromRawAmount(DAI, '100')).involvesToken(DAI)
+      new Pair(CurrencyAmount.fromRawAmount(USDC_SEPOLIA, '100'), CurrencyAmount.fromRawAmount(DAI_SEPOLIA, '100')).involvesToken(DAI_SEPOLIA)
     ).toEqual(true)
     expect(
-      new Pair(CurrencyAmount.fromRawAmount(USDC, '100'), CurrencyAmount.fromRawAmount(DAI, '100')).involvesToken(
-        WETH9[1]
+      new Pair(CurrencyAmount.fromRawAmount(USDC_SEPOLIA, '100'), CurrencyAmount.fromRawAmount(DAI_SEPOLIA, '100')).involvesToken(
+        WETH9[SEPOLIA_CHAIN_ID]
       )
     ).toEqual(false)
   })
@@ -192,7 +194,7 @@ describe('Pair', () => {
     const BLASTBuyFeeBps = BigNumber.from(400)
     const BLASTSellFeeBps = BigNumber.from(10000)
     const BLAST = new Token(
-      MAINNET_CHAIN_ID,
+      SEPOLIA_CHAIN_ID,
       '0x3ed643e9032230f01c6c36060e305ab53ad3b482',
       18,
       'BLAST',
@@ -202,7 +204,7 @@ describe('Pair', () => {
       BLASTSellFeeBps
     )
     const BLAST_WIHTOUT_TAX = new Token(
-      MAINNET_CHAIN_ID,
+      SEPOLIA_CHAIN_ID,
       '0x3ed643e9032230f01c6c36060e305ab53ad3b482',
       18,
       'BLAST',
@@ -212,7 +214,7 @@ describe('Pair', () => {
     const BLASTERSBuyFeeBps = BigNumber.from(300)
     const BLASTERSSellFeeBps = BigNumber.from(350)
     const BLASTERS = new Token(
-      MAINNET_CHAIN_ID,
+      SEPOLIA_CHAIN_ID,
       '0xab98093C7232E98A47D7270CE0c1c2106f61C73b',
       9,
       'BLAST',
@@ -222,7 +224,7 @@ describe('Pair', () => {
       BLASTERSSellFeeBps
     )
     const BLASTERS_WITHOUT_TAX = new Token(
-      MAINNET_CHAIN_ID,
+      SEPOLIA_CHAIN_ID,
       '0xab98093C7232E98A47D7270CE0c1c2106f61C73b',
       9,
       'BLAST',
@@ -349,8 +351,8 @@ describe('Pair', () => {
   })
   describe('miscellaneous', () => {
     it('getLiquidityMinted:0', async () => {
-      const tokenA = new Token(3, '0x0000000000000000000000000000000000000001', 18)
-      const tokenB = new Token(3, '0x0000000000000000000000000000000000000002', 18)
+      const tokenA = new Token(SEPOLIA_CHAIN_ID, '0x0000000000000000000000000000000000000001', 18)
+      const tokenB = new Token(SEPOLIA_CHAIN_ID, '0x0000000000000000000000000000000000000002', 18)
       const pair = new Pair(CurrencyAmount.fromRawAmount(tokenA, '0'), CurrencyAmount.fromRawAmount(tokenB, '0'))
 
       expect(() => {
@@ -379,8 +381,8 @@ describe('Pair', () => {
     })
 
     it('getLiquidityMinted:!0', async () => {
-      const tokenA = new Token(3, '0x0000000000000000000000000000000000000001', 18)
-      const tokenB = new Token(3, '0x0000000000000000000000000000000000000002', 18)
+      const tokenA = new Token(SEPOLIA_CHAIN_ID, '0x0000000000000000000000000000000000000001', 18)
+      const tokenB = new Token(SEPOLIA_CHAIN_ID, '0x0000000000000000000000000000000000000002', 18)
       const pair = new Pair(
         CurrencyAmount.fromRawAmount(tokenA, '10000'),
         CurrencyAmount.fromRawAmount(tokenB, '10000')
@@ -398,8 +400,8 @@ describe('Pair', () => {
     })
 
     it('getLiquidityValue:!feeOn', async () => {
-      const tokenA = new Token(3, '0x0000000000000000000000000000000000000001', 18)
-      const tokenB = new Token(3, '0x0000000000000000000000000000000000000002', 18)
+      const tokenA = new Token(SEPOLIA_CHAIN_ID, '0x0000000000000000000000000000000000000001', 18)
+      const tokenB = new Token(SEPOLIA_CHAIN_ID, '0x0000000000000000000000000000000000000002', 18)
       const pair = new Pair(CurrencyAmount.fromRawAmount(tokenA, '1000'), CurrencyAmount.fromRawAmount(tokenB, '1000'))
 
       {
@@ -439,8 +441,8 @@ describe('Pair', () => {
     })
 
     it('getLiquidityValue:feeOn', async () => {
-      const tokenA = new Token(3, '0x0000000000000000000000000000000000000001', 18)
-      const tokenB = new Token(3, '0x0000000000000000000000000000000000000002', 18)
+      const tokenA = new Token(SEPOLIA_CHAIN_ID, '0x0000000000000000000000000000000000000001', 18)
+      const tokenB = new Token(SEPOLIA_CHAIN_ID, '0x0000000000000000000000000000000000000002', 18)
       const pair = new Pair(CurrencyAmount.fromRawAmount(tokenA, '1000'), CurrencyAmount.fromRawAmount(tokenB, '1000'))
 
       const liquidityValue = pair.getLiquidityValue(

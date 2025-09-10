@@ -13,13 +13,6 @@ var bignumber = require('@ethersproject/bignumber');
 var address = require('@ethersproject/address');
 var solidity = require('@ethersproject/solidity');
 
-// Environment configuration
-var ENV = {
-  SEPOLIA_FACTORY_ADDRESS: /*#__PURE__*/String(process.env.SEPOLIA_FACTORY_ADDRESS),
-  SEPOLIA_ROUTER_ADDRESS: /*#__PURE__*/String(process.env.SEPOLIA_ROUTER_ADDRESS),
-  SEPOLIA_CHAIN_ID: /*#__PURE__*/Number(process.env.SEPOLIA_CHAIN_ID)
-};
-
 (function (ChainId) {
   ChainId[ChainId["SEPOLIA"] = 11155111] = "SEPOLIA";
 })(exports.ChainId || (exports.ChainId = {}));
@@ -30,9 +23,14 @@ var SUPPORTED_CHAINS = [exports.ChainId.SEPOLIA];
 })(exports.NativeCurrencyName || (exports.NativeCurrencyName = {}));
 
 var _FACTORY_ADDRESSES, _ROUTER_ADDRESSES;
+var SEPOLIA_ADDRESSES = {
+  "FACTORY": "0x8F6e70BafAb970150435FF91c9478E564DD283B6",
+  "WETH": "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14",
+  "ROUTER02": "0x5e387eb2064f88dD6bCf8864D1532A7995Adee2D"
+};
 // Contract addresses for different networks
-var FACTORY_ADDRESSES = (_FACTORY_ADDRESSES = {}, _FACTORY_ADDRESSES[exports.ChainId.SEPOLIA] = ENV.SEPOLIA_FACTORY_ADDRESS, _FACTORY_ADDRESSES);
-var ROUTER_ADDRESSES = (_ROUTER_ADDRESSES = {}, _ROUTER_ADDRESSES[exports.ChainId.SEPOLIA] = ENV.SEPOLIA_ROUTER_ADDRESS, _ROUTER_ADDRESSES);
+var FACTORY_ADDRESSES = (_FACTORY_ADDRESSES = {}, _FACTORY_ADDRESSES[exports.ChainId.SEPOLIA] = SEPOLIA_ADDRESSES.FACTORY, _FACTORY_ADDRESSES);
+var ROUTER_ADDRESSES = (_ROUTER_ADDRESSES = {}, _ROUTER_ADDRESSES[exports.ChainId.SEPOLIA] = SEPOLIA_ADDRESSES.ROUTER02, _ROUTER_ADDRESSES);
 // Helper functions to set addresses dynamically
 function setFactoryAddress(chainId, address) {
   FACTORY_ADDRESSES[chainId] = address;
@@ -2213,6 +2211,7 @@ exports.Price = Price;
 exports.ROUTER_ADDRESSES = ROUTER_ADDRESSES;
 exports.Route = Route;
 exports.Router = Router;
+exports.SEPOLIA_ADDRESSES = SEPOLIA_ADDRESSES;
 exports.SUPPORTED_CHAINS = SUPPORTED_CHAINS;
 exports.Token = Token;
 exports.Trade = Trade;

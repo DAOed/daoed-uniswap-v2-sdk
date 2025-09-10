@@ -1,3 +1,8 @@
+export declare const SEPOLIA_ADDRESSES: {
+    FACTORY: string;
+    WETH: string;
+    ROUTER02: string;
+};
 export declare const FACTORY_ADDRESSES: {
     [chainId: number]: string;
 };

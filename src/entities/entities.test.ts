@@ -5,14 +5,15 @@ import { Token } from './token'
 import { CurrencyAmount } from './fractions/currencyAmount'
 import { WETH9 as _WETH9 } from './weth9'
 import { Pair, Route, Trade } from '../index'
+import { ChainId } from '../chains'
 
 const ADDRESSES = [
   '0x0000000000000000000000000000000000000001',
   '0x0000000000000000000000000000000000000002',
   '0x0000000000000000000000000000000000000003'
 ]
-const CHAIN_ID = 3
-const WETH9 = _WETH9[3]
+const CHAIN_ID = ChainId.SEPOLIA
+const WETH9 = _WETH9[ChainId.SEPOLIA]
 const DECIMAL_PERMUTATIONS: [number, number, number][] = [
   [0, 0, 0],
   [0, 9, 18],

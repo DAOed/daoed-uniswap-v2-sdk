@@ -10,7 +10,11 @@
       "Bash(git pull:*)",
       "Bash(rm:*)",
       "Bash(npm whoami:*)",
-      "Bash(npm login)"
+      "Bash(npm login)",
+      "Bash(git stash:*)",
+      "Bash(yarn test)",
+      "Bash(yarn test:*)",
+      "Bash(node:*)"
     ],
     "deny": [],
     "ask": []

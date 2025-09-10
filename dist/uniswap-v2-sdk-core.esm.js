@@ -7,13 +7,6 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { getAddress, getCreate2Address } from '@ethersproject/address';
 import { keccak256, pack } from '@ethersproject/solidity';
 
-// Environment configuration
-var ENV = {
-  SEPOLIA_FACTORY_ADDRESS: /*#__PURE__*/String(process.env.SEPOLIA_FACTORY_ADDRESS),
-  SEPOLIA_ROUTER_ADDRESS: /*#__PURE__*/String(process.env.SEPOLIA_ROUTER_ADDRESS),
-  SEPOLIA_CHAIN_ID: /*#__PURE__*/Number(process.env.SEPOLIA_CHAIN_ID)
-};
-
 var ChainId;
 (function (ChainId) {
   ChainId[ChainId["SEPOLIA"] = 11155111] = "SEPOLIA";
@@ -26,9 +19,14 @@ var NativeCurrencyName;
 })(NativeCurrencyName || (NativeCurrencyName = {}));
 
 var _FACTORY_ADDRESSES, _ROUTER_ADDRESSES;
+var SEPOLIA_ADDRESSES = {
+  "FACTORY": "0x8F6e70BafAb970150435FF91c9478E564DD283B6",
+  "WETH": "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14",
+  "ROUTER02": "0x5e387eb2064f88dD6bCf8864D1532A7995Adee2D"
+};
 // Contract addresses for different networks
-var FACTORY_ADDRESSES = (_FACTORY_ADDRESSES = {}, _FACTORY_ADDRESSES[ChainId.SEPOLIA] = ENV.SEPOLIA_FACTORY_ADDRESS, _FACTORY_ADDRESSES);
-var ROUTER_ADDRESSES = (_ROUTER_ADDRESSES = {}, _ROUTER_ADDRESSES[ChainId.SEPOLIA] = ENV.SEPOLIA_ROUTER_ADDRESS, _ROUTER_ADDRESSES);
+var FACTORY_ADDRESSES = (_FACTORY_ADDRESSES = {}, _FACTORY_ADDRESSES[ChainId.SEPOLIA] = SEPOLIA_ADDRESSES.FACTORY, _FACTORY_ADDRESSES);
+var ROUTER_ADDRESSES = (_ROUTER_ADDRESSES = {}, _ROUTER_ADDRESSES[ChainId.SEPOLIA] = SEPOLIA_ADDRESSES.ROUTER02, _ROUTER_ADDRESSES);
 // Helper functions to set addresses dynamically
 function setFactoryAddress(chainId, address) {
   FACTORY_ADDRESSES[chainId] = address;
@@ -2188,5 +2186,5 @@ var Router = /*#__PURE__*/function () {
   return Router;
 }();
 
-export { BASIS_POINTS, ChainId, CurrencyAmount, Ether, FACTORY_ADDRESSES, FACTORY_ADDRESS_MAP, FIVE, Fraction, INIT_CODE_HASH, InsufficientInputAmountError, InsufficientReservesError, LPPositionTracker, MINIMUM_LIQUIDITY, MaxUint256, MockLPDataProvider, NativeCurrency, NativeCurrencyName, ONE, ONE_HUNDRED_PERCENT, Pair, Percent, Price, ROUTER_ADDRESSES, Rounding, Route, Router, SUPPORTED_CHAINS, Token, Trade, TradeType, WETH9, ZERO, ZERO_PERCENT, _1000, _997, computeLiquidityValue, computePairAddress, computePriceImpact, computeProfitMaximizingTrade, getAmountIn, getAmountOut, getAmountsIn, getAmountsOut, getFactoryAddress, getLiquidityValue, getLiquidityValueAfterArbitrageToPrice, getReservesAfterArbitrage, getRouterAddress, inputOutputComparator, pairFor, quote, setFactoryAddress, setRouterAddress, sortTokens, sortedInsert, sqrt, tradeComparator, validateAndParseAddress };
+export { BASIS_POINTS, ChainId, CurrencyAmount, Ether, FACTORY_ADDRESSES, FACTORY_ADDRESS_MAP, FIVE, Fraction, INIT_CODE_HASH, InsufficientInputAmountError, InsufficientReservesError, LPPositionTracker, MINIMUM_LIQUIDITY, MaxUint256, MockLPDataProvider, NativeCurrency, NativeCurrencyName, ONE, ONE_HUNDRED_PERCENT, Pair, Percent, Price, ROUTER_ADDRESSES, Rounding, Route, Router, SEPOLIA_ADDRESSES, SUPPORTED_CHAINS, Token, Trade, TradeType, WETH9, ZERO, ZERO_PERCENT, _1000, _997, computeLiquidityValue, computePairAddress, computePriceImpact, computeProfitMaximizingTrade, getAmountIn, getAmountOut, getAmountsIn, getAmountsOut, getFactoryAddress, getLiquidityValue, getLiquidityValueAfterArbitrageToPrice, getReservesAfterArbitrage, getRouterAddress, inputOutputComparator, pairFor, quote, setFactoryAddress, setRouterAddress, sortTokens, sortedInsert, sqrt, tradeComparator, validateAndParseAddress };
 //# sourceMappingURL=uniswap-v2-sdk-core.esm.js.map
